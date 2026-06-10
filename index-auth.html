@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Attendance Management System - Auth</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .auth-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .form-toggle {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .form-toggle button {
+        background: none;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: underline;
+      }
+
+      .form-toggle button:hover {
+        color: #0056b3;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      }
+
+      .loading {
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #007bff;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        border: 1px solid #c3e6cb;
+      }
+
+      .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        border: 1px solid #f5c6cb;
+      }
+
+      .info-message {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        border: 1px solid #bee5eb;
+      }
+
+      .role-selection {
+        margin-bottom: 20px;
+      }
+
+      .role-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .role-btn {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        background: white;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+
+      .role-btn:hover {
+        border-color: #007bff;
+        color: #007bff;
+      }
+
+      .role-btn.active {
+        border-color: #007bff;
+        background: #007bff;
+        color: white;
+      }
+
+      .demo-credentials {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        margin-top: 20px;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .demo-credentials strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .demo-credentials code {
+        background: #fff;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-box">
+        <h1>College Attendance System</h1>
+
+        <div class="auth-container">
+          <!-- Role Selection -->
+          <div class="role-selection" id="roleSelection">
+            <h3>Select Your Role</h3>
+            <div class="role-buttons">
+              <button class="role-btn" data-role="teacher">👨‍🏫 Teacher</button>
+              <button class="role-btn" data-role="student">👨‍🎓 Student</button>
+            </div>
+          </div>
+
+          <!-- Message Container -->
+          <div id="messageContainer"></div>
+
+          <!-- Login Form -->
+          <div id="loginFormContainer" style="display: none">
+            <h3>Login</h3>
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="loginEmail">Email:</label>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  name="email"
+                  required
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="loginPassword">Password:</label>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  name="password"
+                  required
+                  placeholder="Enter your password"
+                />
+              </div>
+              <button type="submit" class="login-btn" id="loginBtn">
+                Login
+              </button>
+              <button
+                type="button"
+                class="login-btn"
+                id="backBtn"
+                style="background: #6c757d; margin-left: 10px"
+              >
+                Back
+              </button>
+            </form>
+            <div class="form-toggle">
+              Don't have an account?
+              <button type="button" id="switchToSignup">Sign up</button>
+            </div>
+          </div>
+
+          <!-- Signup Form -->
+          <div id="signupFormContainer" style="display: none">
+            <h3>Sign Up</h3>
+            <form id="signupForm">
+              <div class="form-group">
+                <label for="signupName">Full Name:</label>
+                <input
+                  type="text"
+                  id="signupName"
+                  name="name"
+                  required
+                  placeholder="Enter your full name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="signupEmail">Email:</label>
+                <input
+                  type="email"
+                  id="signupEmail"
+                  name="email"
+                  required
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="signupPassword">Password:</label>
+                <input
+                  type="password"
+                  id="signupPassword"
+                  name="password"
+                  required
+                  placeholder="Enter your password (min 6 characters)"
+                />
+              </div>
+              <div class="form-group">
+                <label for="signupConfirmPassword">Confirm Password:</label>
+                <input
+                  type="password"
+                  id="signupConfirmPassword"
+                  name="confirmPassword"
+                  required
+                  placeholder="Confirm your password"
+                />
+              </div>
+
+              <!-- Additional fields for teacher -->
+              <div id="teacherFields" style="display: none">
+                <div class="form-group">
+                  <label for="signupDepartment">Department:</label>
+                  <input
+                    type="text"
+                    id="signupDepartment"
+                    name="department"
+                    placeholder="e.g., Computer Science"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="signupSubjects"
+                    >Subjects (comma separated):</label
+                  >
+                  <input
+                    type="text"
+                    id="signupSubjects"
+                    name="subjects"
+                    placeholder="e.g., Math, Physics"
+                  />
+                </div>
+              </div>
+
+              <!-- Additional fields for student -->
+              <div id="studentFields" style="display: none">
+                <div class="form-group">
+                  <label for="signupStudentId">Student ID:</label>
+                  <input
+                    type="text"
+                    id="signupStudentId"
+                    name="studentId"
+                    placeholder="e.g., S001"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="signupSemester">Semester:</label>
+                  <select
+                    id="signupSemester"
+                    name="semester"
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      border: 1px solid #ddd;
+                      border-radius: 4px;
+                    "
+                  >
+                    <option value="">Select semester</option>
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                    <option value="3">3rd Semester</option>
+                    <option value="4">4th Semester</option>
+                    <option value="5">5th Semester</option>
+                    <option value="6">6th Semester</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" class="login-btn" id="signupBtn">
+                Sign Up
+              </button>
+              <button
+                type="button"
+                class="login-btn"
+                id="backBtn2"
+                style="background: #6c757d; margin-left: 10px"
+              >
+                Back
+              </button>
+            </form>
+            <div class="form-toggle">
+              Already have an account?
+              <button type="button" id="switchToLogin">Login</button>
+            </div>
+          </div>
+
+          <!-- Demo Credentials Info -->
+          <div class="demo-credentials" id="demoInfo">
+            <strong>🧪 Demo Credentials (Hardcoded):</strong>
+            <div><code>Teacher: teacher / teacher</code></div>
+            <div><code>Student: student / student</code></div>
+            <p style="margin-top: 10px; color: #666">
+              Or register a new account above to create your own credentials
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="auth-ui.js"></script>
+  </body>
+</html>
