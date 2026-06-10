@@ -1,7 +1,7 @@
 class AppManager {
   constructor() {
     this.config = {
-      apiBaseUrl: "http://localhost:5000/api",
+      apiBaseUrl: "https://am-b.onrender.com/api",
       cacheTimeout: 5 * 60 * 1000, // 5 minutes
       debounceDelay: 300,
     };

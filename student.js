@@ -151,7 +151,7 @@ async function displayTodayAttendance(studentId) {
         localStorage.getItem("authToken") || localStorage.getItem("token");
       if (token) {
         const response = await fetch(
-          `http://localhost:5000/api/attendance/student/${encodeURIComponent(studentId)}?startDate=${today}&endDate=${today}`,
+          `https://am-b.onrender.com/api/attendance/student/${encodeURIComponent(studentId)}?startDate=${today}&endDate=${today}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
 

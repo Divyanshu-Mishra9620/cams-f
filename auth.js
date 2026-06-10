@@ -1,5 +1,5 @@
 class AuthService {
-  constructor(apiBaseUrl = "http://localhost:5000/api") {
+  constructor(apiBaseUrl = "https://am-b.onrender.com/api") {
     this.apiBaseUrl = apiBaseUrl;
     this.token = localStorage.getItem("authToken");
     this.currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;

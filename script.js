@@ -18,17 +18,21 @@ class AttendanceSystem {
       const requests = [];
 
       if (currentUser?.role === "teacher" || currentUser?.role === "admin") {
-        requests.push(fetch("http://localhost:5000/api/students", { headers }));
         requests.push(
-          fetch("http://localhost:5000/api/attendance", { headers }),
+          fetch("https://am-b.onrender.com/api/students", { headers }),
+        );
+        requests.push(
+          fetch("https://am-b.onrender.com/api/attendance", { headers }),
         );
       } else if (currentUser?.role === "student" && currentUser.studentId) {
         requests.push(
-          fetch("http://localhost:5000/api/students/profile/me", { headers }),
+          fetch("https://am-b.onrender.com/api/students/profile/me", {
+            headers,
+          }),
         );
         requests.push(
           fetch(
-            `http://localhost:5000/api/attendance/student/${encodeURIComponent(currentUser.studentId)}`,
+            `https://am-b.onrender.com/api/attendance/student/${encodeURIComponent(currentUser.studentId)}`,
             { headers },
           ),
         );
@@ -137,7 +141,7 @@ class AttendanceSystem {
 
     const token =
       localStorage.getItem("authToken") || localStorage.getItem("token");
-    return fetch("http://localhost:5000/api/students", {
+    return fetch("https://am-b.onrender.com/api/students", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -188,7 +192,7 @@ class AttendanceSystem {
       localStorage.getItem("authToken") || localStorage.getItem("token");
     if (token) {
       fetch(
-        `http://localhost:5000/api/students/${encodeURIComponent(studentId)}`,
+        `https://am-b.onrender.com/api/students/${encodeURIComponent(studentId)}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
@@ -220,7 +224,7 @@ class AttendanceSystem {
 
     const token =
       localStorage.getItem("authToken") || localStorage.getItem("token");
-    return fetch("http://localhost:5000/api/attendance/mark", {
+    return fetch("https://am-b.onrender.com/api/attendance/mark", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -380,14 +384,17 @@ function initializeLoginPage() {
     };
     if (selectedRole === "teacher") {
       try {
-        const loginRes = await fetch("http://localhost:5000/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: username === "teacher" ? "teacher@cams.local" : username,
-            password,
-          }),
-        });
+        const loginRes = await fetch(
+          "https://am-b.onrender.com/api/auth/login",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: username === "teacher" ? "teacher@cams.local" : username,
+              password,
+            }),
+          },
+        );
         if (loginRes.ok) {
           const data = await loginRes.json();
           if (data.user?.role === "teacher") {
@@ -418,11 +425,14 @@ function initializeLoginPage() {
       }
     } else if (selectedRole === "student") {
       try {
-        const loginRes = await fetch("http://localhost:5000/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: username, password }),
-        });
+        const loginRes = await fetch(
+          "https://am-b.onrender.com/api/auth/login",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: username, password }),
+          },
+        );
         if (loginRes.ok) {
           const data = await loginRes.json();
           if (data.user?.role === "student") {
