@@ -1,8 +1,3 @@
-/**
- * Shared Attendance System - Centralized attendance management
- * Eliminates code duplication between student and teacher dashboards
- */
-
 class AttendanceSystem {
   constructor() {
     this.students = JSON.parse(localStorage.getItem("students")) || [];
@@ -10,23 +5,14 @@ class AttendanceSystem {
     this.attendance = JSON.parse(localStorage.getItem("attendance")) || [];
   }
 
-  /**
-   * Get all students
-   */
   getStudents() {
     return this.students;
   }
 
-  /**
-   * Get student by ID
-   */
   getStudentById(id) {
     return this.students.find((student) => student.id === id);
   }
 
-  /**
-   * Get student by name
-   */
   getStudentByName(name) {
     return this.students.find(
       (student) =>
@@ -35,46 +21,28 @@ class AttendanceSystem {
     );
   }
 
-  /**
-   * Get all classes
-   */
   getClasses() {
     return this.classes;
   }
 
-  /**
-   * Get class by ID
-   */
   getClassById(id) {
     return this.classes.find((cls) => cls.id === id);
   }
 
-  /**
-   * Get classes for a student
-   */
   getStudentClasses(studentId) {
     return this.classes.filter((cls) =>
       cls.enrolledStudents.includes(studentId),
     );
   }
 
-  /**
-   * Get attendance for a class
-   */
   getClassAttendance(classId) {
     return this.attendance.filter((att) => att.classId === classId);
   }
 
-  /**
-   * Get attendance for a student
-   */
   getStudentAttendance(studentId) {
     return this.attendance.filter((att) => att.studentId === studentId);
   }
 
-  /**
-   * Mark attendance for a student in a class
-   */
   markAttendance(studentId, classId, status = "present") {
     const date = new Date().toISOString().split("T")[0];
     const existingRecord = this.attendance.find(
@@ -100,9 +68,6 @@ class AttendanceSystem {
     return true;
   }
 
-  /**
-   * Calculate attendance percentage for a student in a class
-   */
   calculateAttendancePercentage(studentId, classId) {
     const classAttendance = this.attendance.filter(
       (att) => att.classId === classId && att.studentId === studentId,
@@ -117,9 +82,6 @@ class AttendanceSystem {
     return Math.round((presentCount / classAttendance.length) * 100);
   }
 
-  /**
-   * Get attendance stats for a class
-   */
   getClassAttendanceStats(classId) {
     const classAttendance = this.attendance.filter(
       (att) => att.classId === classId,
@@ -141,9 +103,6 @@ class AttendanceSystem {
     };
   }
 
-  /**
-   * Get overall attendance stats for a student
-   */
   getStudentAttendanceStats(studentId) {
     const studentAttendance = this.attendance.filter(
       (att) => att.studentId === studentId,
@@ -165,30 +124,18 @@ class AttendanceSystem {
     };
   }
 
-  /**
-   * Save attendance data to localStorage
-   */
   saveAttendance() {
     localStorage.setItem("attendance", JSON.stringify(this.attendance));
   }
 
-  /**
-   * Save classes data to localStorage
-   */
   saveClasses() {
     localStorage.setItem("classes", JSON.stringify(this.classes));
   }
 
-  /**
-   * Save students data to localStorage
-   */
   saveStudents() {
     localStorage.setItem("students", JSON.stringify(this.students));
   }
 
-  /**
-   * Add a new class
-   */
   addClass(classData) {
     const newClass = {
       id: `cls_${Date.now()}`,
@@ -202,9 +149,6 @@ class AttendanceSystem {
     return newClass;
   }
 
-  /**
-   * Update class information
-   */
   updateClass(classId, classData) {
     const classIndex = this.classes.findIndex((cls) => cls.id === classId);
     if (classIndex === -1) return false;
@@ -218,9 +162,6 @@ class AttendanceSystem {
     return true;
   }
 
-  /**
-   * Delete a class
-   */
   deleteClass(classId) {
     this.classes = this.classes.filter((cls) => cls.id !== classId);
     this.attendance = this.attendance.filter((att) => att.classId !== classId);
@@ -229,9 +170,6 @@ class AttendanceSystem {
     return true;
   }
 
-  /**
-   * Enroll a student in a class
-   */
   enrollStudent(classId, studentId) {
     const cls = this.getClassById(classId);
     if (cls && !cls.enrolledStudents.includes(studentId)) {
@@ -242,9 +180,6 @@ class AttendanceSystem {
     return false;
   }
 
-  /**
-   * Remove a student from a class
-   */
   removeStudentFromClass(classId, studentId) {
     const cls = this.getClassById(classId);
     if (cls) {
@@ -257,9 +192,6 @@ class AttendanceSystem {
     return false;
   }
 
-  /**
-   * Get attendance report for a date range
-   */
   getAttendanceReport(startDate, endDate, studentId = null) {
     let report = this.attendance.filter((att) => {
       const attDate = new Date(att.date);
@@ -275,9 +207,6 @@ class AttendanceSystem {
     return report;
   }
 
-  /**
-   * Export attendance data
-   */
   exportAttendanceData(format = "json") {
     const data = {
       students: this.students,
@@ -293,9 +222,6 @@ class AttendanceSystem {
     return JSON.stringify(data, null, 2);
   }
 
-  /**
-   * Convert data to CSV format
-   */
   convertToCSV(data) {
     let csv = "Student ID,Student Name,Class ID,Date,Status\n";
 
@@ -308,9 +234,6 @@ class AttendanceSystem {
     return csv;
   }
 
-  /**
-   * Clear all data (use with caution)
-   */
   clearAllData() {
     this.students = [];
     this.classes = [];
@@ -321,5 +244,4 @@ class AttendanceSystem {
   }
 }
 
-// Create global singleton instance
 const attendanceSystem = new AttendanceSystem();

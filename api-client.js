@@ -1,4 +1,3 @@
-// API Configuration and helper functions
 const API_BASE_URL = "http://localhost:5000/api";
 
 class APIClient {
@@ -55,7 +54,6 @@ class APIClient {
     }
   }
 
-  // Auth endpoints
   register(userData) {
     return this.request("/auth/register", {
       method: "POST",
@@ -78,7 +76,6 @@ class APIClient {
     return this.request("/auth/me", { method: "GET" });
   }
 
-  // Student endpoints
   getAllStudents(filters = {}) {
     const params = new URLSearchParams(filters);
     return this.request(`/students?${params}`, { method: "GET" });
@@ -114,7 +111,6 @@ class APIClient {
     return this.request(`/students/semester/${semester}`, { method: "GET" });
   }
 
-  // Attendance endpoints
   markAttendance(attendanceData) {
     return this.request("/attendance/mark", {
       method: "POST",
@@ -165,7 +161,6 @@ class APIClient {
     });
   }
 
-  // Teacher endpoints
   getAllTeachers(filters = {}) {
     const params = new URLSearchParams(filters);
     return this.request(`/teachers?${params}`, { method: "GET" });
@@ -186,5 +181,4 @@ class APIClient {
   }
 }
 
-// Create global API client instance
 const apiClient = new APIClient();

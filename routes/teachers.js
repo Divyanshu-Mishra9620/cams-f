@@ -4,7 +4,6 @@ import { verifyToken, authorizeRole } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Get current teacher profile
 router.get(
   "/profile/me",
   verifyToken,
@@ -24,7 +23,6 @@ router.get(
   },
 );
 
-// Get teachers by department
 router.get("/department/:department", verifyToken, async (req, res) => {
   try {
     const teachers = await Teacher.find({
@@ -36,7 +34,6 @@ router.get("/department/:department", verifyToken, async (req, res) => {
   }
 });
 
-// Get all teachers (Admin only)
 router.get("/", verifyToken, authorizeRole(["admin"]), async (req, res) => {
   try {
     const { department } = req.query;
@@ -56,7 +53,6 @@ router.get("/", verifyToken, authorizeRole(["admin"]), async (req, res) => {
   }
 });
 
-// Get teacher by ID
 router.get("/:id", verifyToken, async (req, res) => {
   try {
     const teacher = await Teacher.findById(req.params.id).populate(
@@ -74,7 +70,6 @@ router.get("/:id", verifyToken, async (req, res) => {
   }
 });
 
-// Create new teacher (Admin only)
 router.post("/", verifyToken, authorizeRole(["admin"]), async (req, res) => {
   try {
     const {
@@ -88,7 +83,6 @@ router.post("/", verifyToken, authorizeRole(["admin"]), async (req, res) => {
       phoneNumber,
     } = req.body;
 
-    // Check if employee ID already exists
     const existingTeacher = await Teacher.findOne({ employeeId });
     if (existingTeacher) {
       return res.status(400).json({ error: "Employee ID already exists" });
@@ -112,7 +106,6 @@ router.post("/", verifyToken, authorizeRole(["admin"]), async (req, res) => {
   }
 });
 
-// Update teacher
 router.put(
   "/:id",
   verifyToken,
@@ -147,7 +140,6 @@ router.put(
   },
 );
 
-// Delete teacher
 router.delete(
   "/:id",
   verifyToken,

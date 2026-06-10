@@ -1,461 +1,443 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
 }
 
 .login-box {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    text-align: center;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
 }
 
 .login-box h1 {
-    color: #333;
-    margin-bottom: 30px;
-    font-size: 28px;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 28px;
 }
 
 .role-selection h3 {
-    color: #555;
-    margin-bottom: 20px;
+  color: #555;
+  margin-bottom: 20px;
 }
 
 .role-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .role-btn {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .teacher-btn {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-    color: white;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
 }
 
 .student-btn {
-    background: linear-gradient(135deg, #4ecdc4, #44a08d);
-    color: white;
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  color: white;
 }
 
 .role-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .login-form-section {
-    text-align: left;
+  text-align: left;
 }
 
 .login-form-section h3 {
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-    font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: 500;
 }
 
 .form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
 }
 
 .form-group input:focus {
-    outline: none;
-    border-color: #667eea;
+  outline: none;
+  border-color: #667eea;
 }
 
 .login-btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .error-message {
-    background: #fee;
-    color: #c33;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 15px;
-    border-left: 4px solid #c33;
+  background: #fee;
+  color: #c33;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  border-left: 4px solid #c33;
 }
 
-/* Dashboard Styles */
 .dashboard-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
 }
 
 .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #667eea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #667eea;
 }
 
 .dashboard-header h1 {
-    color: white;
-    font-size: 32px;
+  color: white;
+  font-size: 32px;
 }
 
 .logout-btn {
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #dc3545, #fd7e14);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #dc3545, #fd7e14);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .logout-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .dashboard-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
 }
 
 .dashboard-card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    min-width: 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  min-width: 0;
 }
 
 .dashboard-card h3 {
-    color: #333;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #667eea;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #667eea;
 }
 
 .form-row {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
 }
 
 .form-row input,
 .form-row select {
-    flex: 1;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
 }
 
 .form-row input:focus,
 .form-row select:focus {
-    outline: none;
-    border-color: #667eea;
+  outline: none;
+  border-color: #667eea;
 }
 
 .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
 }
 
 .btn-success {
-    background: linear-gradient(135deg, #28a745, #20c997);
-    color: white;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
 }
 
 .btn-danger {
-    background: linear-gradient(135deg, #dc3545, #fd7e14);
-    color: white;
+  background: linear-gradient(135deg, #dc3545, #fd7e14);
+  color: white;
 }
 
 .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn:disabled,
 .attendance-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.65;
-    transform: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
 }
 
 .btn.is-loading {
-    position: relative;
-    padding-left: 42px;
+  position: relative;
+  padding-left: 42px;
 }
 
 .btn.is-loading::before {
-    content: "";
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    width: 14px;
-    height: 14px;
-    margin-top: -7px;
-    border: 2px solid rgba(255, 255, 255, 0.45);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .student-list {
-    max-height: 300px;
-    overflow-y: auto;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .student-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
 }
 
 .student-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .attendance-btn {
-    padding: 5px 10px;
-    margin: 0 2px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 12px;
+  padding: 5px 10px;
+  margin: 0 2px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
 }
 
 .present {
-    background: #28a745;
-    color: white;
+  background: #28a745;
+  color: white;
 }
 
 .absent {
-    background: #dc3545;
-    color: white;
+  background: #dc3545;
+  color: white;
 }
 
 .leave {
-    background: #ffc107;
-    color: black;
+  background: #ffc107;
+  color: black;
 }
 
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
 }
 
 .stat-card {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: center;
-    border-left: 4px solid #667eea;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  border-left: 4px solid #667eea;
 }
 
 .stat-card h4 {
-    margin: 0 0 10px 0;
-    color: #666;
+  margin: 0 0 10px 0;
+  color: #666;
 }
 
 .stat-card .stat-value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
 }
 
 .table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .attendance-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    min-width: 500px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  min-width: 500px;
 }
 
 .attendance-table th,
 .attendance-table td {
-    padding: 10px 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .attendance-table th {
-    background: #f8f9fa;
-    font-weight: 600;
-    font-size: 13px;
-    white-space: nowrap;
+  background: #f8f9fa;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 .attendance-table td {
-    font-size: 13px;
+  font-size: 13px;
 }
 
 .attendance-table td:last-child {
-    min-width: 70px;
+  min-width: 70px;
 }
 
 .percentage-high {
-    color: #28a745;
-    font-weight: bold;
+  color: #28a745;
+  font-weight: bold;
 }
 
 .percentage-medium {
-    color: #ffc107;
-    font-weight: bold;
+  color: #ffc107;
+  font-weight: bold;
 }
 
 .percentage-low {
-    color: #dc3545;
-    font-weight: bold;
+  color: #dc3545;
+  font-weight: bold;
 }
 
 .class-stat-item {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border-left: 4px solid #667eea;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border-left: 4px solid #667eea;
 }
 
 .class-stat-item h4 {
-    margin: 0 0 10px 0;
-    color: #333;
+  margin: 0 0 10px 0;
+  color: #333;
 }
 
 .stat-details {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .stat-details span {
-    font-size: 14px;
-    color: #666;
+  font-size: 14px;
+  color: #666;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
-    .dashboard-header {
-        flex-direction: column;
-        gap: 15px;
-    }
+  .dashboard-header {
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    .form-row {
-        flex-direction: column;
-    }
+  .form-row {
+    flex-direction: column;
+  }
 
-    .role-buttons {
-        gap: 10px;
-    }
+  .role-buttons {
+    gap: 10px;
+  }
 
-    .login-box {
-        margin: 20px;
-        padding: 30px 20px;
-    }
-}
-ns: 1fr;
-    }
+  .login-box {
+    margin: 20px;
+    padding: 30px 20px;
+  }
 
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-row {
-        flex-direction: column;
-    }
-
-    .role-buttons {
-        gap: 10px;
-    }
-
-    .login-box {
-        margin: 20px;
-        padding: 30px 20px;
-    }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 }

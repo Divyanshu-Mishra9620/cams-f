@@ -1,5 +1,3 @@
-// ===== UPDATED LOGIN SCRIPT WITH BACKEND INTEGRATION =====
-
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname.split("/").pop();
 
@@ -53,12 +51,9 @@ function initializeLoginPage() {
   });
 
   async function loginTeacher(username, password) {
-    // Hardcoded teacher credentials
     const TEACHER_EMAIL = "teacher";
     const TEACHER_PASSWORD = "teacher";
-
     if (username === TEACHER_EMAIL && password === TEACHER_PASSWORD) {
-      // Create mock teacher session
       const mockTeacher = {
         _id: "teacher_001",
         username: "teacher",
@@ -77,7 +72,6 @@ function initializeLoginPage() {
         classes: ["A", "B", "C"],
       };
 
-      // Generate mock token
       const mockToken = btoa(
         JSON.stringify({ userId: mockTeacher._id, role: "teacher" }),
       );
@@ -94,7 +88,6 @@ function initializeLoginPage() {
       );
       window.location.href = "teacher.html";
     } else {
-      // Try backend authentication
       const response = await apiClient.login(username, password);
 
       if (response.user.role !== "teacher") {
@@ -116,19 +109,16 @@ function initializeLoginPage() {
   }
 
   async function loginStudent(username, password) {
-    // Hardcoded student credentials
     const STUDENT_EMAIL = "student";
     const STUDENT_PASSWORD = "student";
 
     if (username === STUDENT_EMAIL && password === STUDENT_PASSWORD) {
-      // Create mock student session
       const mockStudent = {
         _id: "student_001",
         username: "student",
         email: "student@cams.local",
         role: "student",
       };
-
       const mockProfile = {
         _id: "student_profile_001",
         userId: mockStudent._id,
@@ -138,13 +128,10 @@ function initializeLoginPage() {
         semester: 1,
         classes: ["A", "B"],
       };
-
-      // Generate mock token
       const mockToken = btoa(
         JSON.stringify({ userId: mockStudent._id, role: "student" }),
       );
       apiClient.setToken(mockToken);
-
       localStorage.setItem(
         "currentUser",
         JSON.stringify({
@@ -157,7 +144,6 @@ function initializeLoginPage() {
       );
       window.location.href = "student.html";
     } else {
-      // Try backend authentication
       const response = await apiClient.login(username, password);
 
       if (response.user.role !== "student") {

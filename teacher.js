@@ -1,5 +1,3 @@
-// ===== TEACHER JS FILE - OPTIMIZED =====
-// Define all subjects
 const allSubjects = [
   "software engineering",
   "CAHM",
@@ -9,7 +7,6 @@ const allSubjects = [
   "Minor project Work",
 ];
 
-// Define subjects by semester
 const subjectsBySemester = {
   1: [
     "communication skills - I",
@@ -57,15 +54,10 @@ const subjectsBySemester = {
   ],
 };
 
-// Initialize the system
-// (attendanceSystem is initialized in script.js)
-
-// Teacher-specific functions
 function initializeTeacherPage() {
   updateClassStatistics();
   displayAllStudents();
 
-  // Update subject options based on semester selection for add student
   document
     .getElementById("studentSemester")
     .addEventListener("change", function () {
@@ -82,7 +74,6 @@ function initializeTeacherPage() {
       }
     });
 
-  // Update subject options based on semester selection for mark attendance
   document
     .getElementById("attendanceSemester")
     .addEventListener("change", function () {
@@ -99,43 +90,42 @@ function initializeTeacherPage() {
       }
     });
 
-  // Add student form
-  document.getElementById("addStudentForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = document.getElementById("studentName").value;
-    const id = document.getElementById("studentId").value;
-    const email = document.getElementById("studentEmail").value;
-    const className = document.getElementById("studentClass").value;
-    const semester = document.getElementById("studentSemester").value;
-    const subject = document.getElementById("studentSubject").value;
+  document
+    .getElementById("addStudentForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("studentName").value;
+      const id = document.getElementById("studentId").value;
+      const email = document.getElementById("studentEmail").value;
+      const className = document.getElementById("studentClass").value;
+      const semester = document.getElementById("studentSemester").value;
+      const subject = document.getElementById("studentSubject").value;
 
-    if (attendanceSystem.students.find((s) => s.id === id)) {
-      alert("Student ID already exists!");
-      return;
-    }
+      if (attendanceSystem.students.find((s) => s.id === id)) {
+        alert("Student ID already exists!");
+        return;
+      }
 
-    // Create student for the selected semester
-    const student = {
-      id,
-      name,
-      email,
-      semester,
-      subject,
-      classes: subjectsBySemester[semester] || allSubjects,
-    };
+      const student = {
+        id,
+        name,
+        email,
+        semester,
+        subject,
+        classes: subjectsBySemester[semester] || allSubjects,
+      };
 
-    try {
-      await attendanceSystem.addStudent(student);
-      alert("Student added successfully! Login password is: student");
-      e.target.reset();
-      displayAllStudents();
-      updateClassStatistics();
-    } catch (error) {
-      alert(error.message || "Student could not be saved");
-    }
-  });
+      try {
+        await attendanceSystem.addStudent(student);
+        alert("Student added successfully! Login password is: student");
+        e.target.reset();
+        displayAllStudents();
+        updateClassStatistics();
+      } catch (error) {
+        alert(error.message || "Student could not be saved");
+      }
+    });
 
-  // Attendance form
   document.getElementById("attendanceForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const semester = document.getElementById("attendanceSemester").value;
@@ -156,7 +146,6 @@ function initializeTeacherPage() {
     displayStudentsForAttendance(students, className, date);
   });
 
-  // Search form
   document.getElementById("searchForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const query = document.getElementById("searchInput").value.trim();
@@ -166,7 +155,6 @@ function initializeTeacherPage() {
     displaySearchResults(results);
   });
 
-  // Update class statistics based on semester selection
   document
     .getElementById("statsSemester")
     .addEventListener("change", function () {
@@ -174,7 +162,6 @@ function initializeTeacherPage() {
       updateClassStatistics(semester);
     });
 
-  // Update student list based on semester filter
   document
     .getElementById("filterSemester")
     .addEventListener("change", function () {
@@ -252,14 +239,12 @@ function markStudentAttendance(studentId, status) {
 
   const allButtons = [...buttons, ...buttons2, ...buttons3];
 
-  // Immediately disable all buttons for this student
   allButtons.forEach((btn) => {
     btn.disabled = true;
     btn.classList.add("disabled");
-    btn.onclick = null; // Remove onclick to prevent further actions
+    btn.onclick = null;
   });
 
-  // Set the active class for the selected status
   if (status === "present") {
     buttons.forEach((btn) => btn.classList.add("active"));
   } else if (status === "absent") {
@@ -273,7 +258,9 @@ async function saveAttendance() {
   const selectedClass = document.getElementById("selectedClass").textContent;
   const selectedDate = document.getElementById("selectedDate").textContent;
   const semester = document.getElementById("attendanceSemester").value;
-  const saveButton = document.querySelector('button[onclick="saveAttendance()"]');
+  const saveButton = document.querySelector(
+    'button[onclick="saveAttendance()"]',
+  );
   const originalButtonText = saveButton?.textContent || "Save Attendance";
 
   const students = attendanceSystem.getStudentsBySemester(semester);
@@ -345,7 +332,9 @@ async function saveAttendance() {
         `Attendance saved for ${savedCount} students!${skippedCount > 0 ? ` ${skippedCount} students already had attendance marked for this subject/date.` : ""}${failedCount > 0 ? ` ${failedCount} failed to save.` : ""}`,
       );
     } else if (failedCount > 0) {
-      alert("Attendance could not be saved. Please check the server and try again.");
+      alert(
+        "Attendance could not be saved. Please check the server and try again.",
+      );
     } else {
       alert(
         "No attendance marked! All selected students already have attendance for this subject/date.",
@@ -513,14 +502,17 @@ function logout() {
   window.location.href = "/";
 }
 
-// Initialize teacher page if on teacher.html
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname.split("/").pop();
   if (currentPage === "teacher.html") {
     initializeTeacherPage();
     window.addEventListener("cams:data-synced", () => {
-      displayAllStudents(document.getElementById("filterSemester")?.value || null);
-      updateClassStatistics(document.getElementById("statsSemester")?.value || null);
+      displayAllStudents(
+        document.getElementById("filterSemester")?.value || null,
+      );
+      updateClassStatistics(
+        document.getElementById("statsSemester")?.value || null,
+      );
     });
   }
 });

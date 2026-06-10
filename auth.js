@@ -1,6 +1,3 @@
-// ===== AUTHENTICATION MODULE =====
-// Handles signup and login with backend API integration
-
 class AuthService {
   constructor(apiBaseUrl = "http://localhost:5000/api") {
     this.apiBaseUrl = apiBaseUrl;
@@ -9,20 +6,13 @@ class AuthService {
     this.tokenExpiry = localStorage.getItem("tokenExpiry");
   }
 
-  /**
-   * Check if token is still valid
-   */
   isTokenValid() {
     if (!this.token || !this.tokenExpiry) return false;
     return Date.now() < parseInt(this.tokenExpiry);
   }
 
-  /**
-   * Sign up a new user
-   */
   async signup(userData) {
     try {
-      // Validate required fields
       if (!userData.email || !userData.password || !userData.name) {
         return {
           success: false,
@@ -48,7 +38,6 @@ class AuthService {
         };
       }
 
-      // Store token and user info
       if (data.token) {
         const expiryTime = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 days
         localStorage.setItem("authToken", data.token);
@@ -78,12 +67,8 @@ class AuthService {
     }
   }
 
-  /**
-   * Login an existing user with validation
-   */
   async login(email, password) {
     try {
-      // Validate input
       if (!email || !password) {
         return {
           success: false,
@@ -109,7 +94,6 @@ class AuthService {
         };
       }
 
-      // Store token with expiry
       if (data.token) {
         const expiryTime = Date.now() + 7 * 24 * 60 * 60 * 1000;
         localStorage.setItem("authToken", data.token);
@@ -139,9 +123,6 @@ class AuthService {
     }
   }
 
-  /**
-   * Logout user
-   */
   logout() {
     localStorage.removeItem("authToken");
     localStorage.removeItem("token");
@@ -151,34 +132,18 @@ class AuthService {
     this.currentUser = null;
   }
 
-  /**
-   * Check if user is authenticated
-   * @returns {Boolean}
-   */
   isAuthenticated() {
     return !!this.currentUser && (!!this.token || this.currentUser.isDemo);
   }
 
-  /**
-   * Get current user
-   * @returns {Object|null}
-   */
   getCurrentUser() {
     return this.currentUser;
   }
 
-  /**
-   * Get auth token
-   * @returns {String|null}
-   */
   getToken() {
     return this.token;
   }
 
-  /**
-   * Set auth token
-   * @param {String} token
-   */
   setToken(token) {
     if (token) {
       localStorage.setItem("authToken", token);
@@ -187,10 +152,6 @@ class AuthService {
     }
   }
 
-  /**
-   * Get authorization headers
-   * @returns {Object}
-   */
   getAuthHeaders() {
     return {
       "Content-Type": "application/json",
@@ -198,10 +159,6 @@ class AuthService {
     };
   }
 
-  /**
-   * Verify token and get current user info from backend
-   * @returns {Promise<Object>}
-   */
   async verifyToken() {
     if (!this.token) {
       return { success: false, authenticated: false };
@@ -216,12 +173,10 @@ class AuthService {
       const data = await response.json();
 
       if (!response.ok) {
-        // Token is invalid
         this.logout();
         return { success: false, authenticated: false };
       }
 
-      // Update current user info
       if (data.user) {
         localStorage.setItem("currentUser", JSON.stringify(data.user));
         this.currentUser = data.user;
@@ -243,5 +198,4 @@ class AuthService {
   }
 }
 
-// Create global instance
 const authService = new AuthService();

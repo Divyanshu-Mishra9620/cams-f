@@ -1,7 +1,3 @@
-// ===== STUDENT JS FILE =====
-// Student-specific functions
-
-// Helper function to get today's date in YYYY-MM-DD format
 function getTodayDateString() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -17,12 +13,9 @@ async function initializeStudentPage() {
   await attendanceSystem.syncFromDB({ notify: false });
   const syncedUser =
     JSON.parse(localStorage.getItem("currentUser")) || currentUser;
-
-  // Check if student exists in localStorage (old system) or use currentUser (new auth system)
   let student = attendanceSystem.getStudentById(syncedUser.studentId);
 
   if (!student) {
-    // Use the currentUser as the student object if not found in localStorage
     student = {
       id: syncedUser.studentId || syncedUser.id,
       name: syncedUser.name || "Student",
@@ -61,7 +54,6 @@ function displayStudentAttendance(studentId) {
   document.getElementById("presentDays").textContent = presentDays;
   document.getElementById("overallAttendance").textContent = percentage + "%";
 
-  // Draw circular chart
   drawAttendanceChart(percentage);
 }
 
@@ -71,29 +63,21 @@ function drawAttendanceChart(percentage) {
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
   const radius = 40;
-
-  // Clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Draw background circle (red for absent part)
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-  ctx.fillStyle = "#dc3545"; // Red for absent
+  ctx.fillStyle = "#dc3545";
   ctx.fill();
-
-  // Draw progress sector (green for present part)
-  const startAngle = -Math.PI / 2; // Start from top
+  const startAngle = -Math.PI / 2;
   const endAngle = startAngle + (percentage / 100) * 2 * Math.PI;
 
   ctx.beginPath();
   ctx.moveTo(centerX, centerY);
   ctx.arc(centerX, centerY, radius, startAngle, endAngle);
   ctx.closePath();
-  ctx.fillStyle = "#28a745"; // Green for present
+  ctx.fillStyle = "#28a745";
   ctx.fill();
-
-  // Draw percentage text
-  ctx.fillStyle = "#fff"; // White text for contrast
+  ctx.fillStyle = "#fff";
   ctx.font = "bold 16px Arial";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -103,8 +87,6 @@ function drawAttendanceChart(percentage) {
 function displaySubjectWiseAttendance(studentId, classes) {
   const attendance = attendanceSystem.getStudentAttendance(studentId);
   const subjectStats = {};
-
-  // Initialize stats for all enrolled classes
   if (classes && classes.length > 0) {
     classes.forEach((className) => {
       subjectStats[className] = {
@@ -115,8 +97,6 @@ function displaySubjectWiseAttendance(studentId, classes) {
       };
     });
   }
-
-  // Populate actual attendance
   attendance.forEach((record) => {
     if (!subjectStats[record.class]) {
       subjectStats[record.class] = {
@@ -163,12 +143,8 @@ function displaySubjectWiseAttendance(studentId, classes) {
 
 async function displayTodayAttendance(studentId) {
   const today = getTodayDateString();
-
-  // First try to get from local attendance data
   let attendance = attendanceSystem.getStudentAttendance(studentId);
   let todayAttendance = attendance.find((record) => record.date === today);
-
-  // If not found locally, try to fetch from API
   if (!todayAttendance) {
     try {
       const token =
@@ -198,8 +174,6 @@ async function displayTodayAttendance(studentId) {
       console.error("Error fetching today attendance from API:", error);
     }
   }
-
-  // Display the results
   if (todayAttendance && todayAttendance.status) {
     document.getElementById("todayStatus").textContent =
       todayAttendance.status.charAt(0).toUpperCase() +
@@ -246,8 +220,6 @@ function logout() {
   authService.logout();
   window.location.href = "/";
 }
-
-// Initialize student page if on student.html
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname.split("/").pop();
   if (currentPage === "student.html") {

@@ -33,7 +33,6 @@ const populateAttendance = (query) =>
     .populate("studentId", "name studentId email semester classes")
     .populate("markedBy", "name employeeId email");
 
-// Mark attendance
 router.post(
   "/mark",
   verifyToken,
@@ -90,7 +89,6 @@ router.post(
   },
 );
 
-// Get all attendance records, optionally filtered
 router.get("/", verifyToken, async (req, res) => {
   try {
     const { studentId, className, startDate, endDate } = req.query;
@@ -124,7 +122,6 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-// Get attendance for a student
 router.get("/student/:studentId", verifyToken, async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
@@ -152,7 +149,6 @@ router.get("/student/:studentId", verifyToken, async (req, res) => {
   }
 });
 
-// Get attendance for a class on a specific date
 router.get("/class/:className/date/:date", verifyToken, async (req, res) => {
   try {
     const dateObj = startOfDay(req.params.date);
@@ -176,7 +172,6 @@ router.get("/class/:className/date/:date", verifyToken, async (req, res) => {
   }
 });
 
-// Get attendance statistics for a student
 router.get("/stats/student/:studentId", verifyToken, async (req, res) => {
   try {
     const student = await resolveStudent(req.params.studentId);
@@ -216,7 +211,6 @@ router.get("/stats/student/:studentId", verifyToken, async (req, res) => {
   }
 });
 
-// Get attendance statistics for a class
 router.get("/stats/class/:className", verifyToken, async (req, res) => {
   try {
     const attendance = await Attendance.find({
@@ -245,7 +239,6 @@ router.get("/stats/class/:className", verifyToken, async (req, res) => {
   }
 });
 
-// Update attendance record
 router.put(
   "/:id",
   verifyToken,
@@ -273,7 +266,6 @@ router.put(
   },
 );
 
-// Delete attendance record
 router.delete(
   "/:id",
   verifyToken,
@@ -293,7 +285,6 @@ router.delete(
   },
 );
 
-// Bulk mark attendance for a class
 router.post(
   "/bulk/mark-class",
   verifyToken,

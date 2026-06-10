@@ -1,6 +1,3 @@
-// ===== APP INITIALIZATION & OPTIMIZATION MODULE =====
-// Consolidated app logic with performance optimizations
-
 class AppManager {
   constructor() {
     this.config = {
@@ -12,9 +9,6 @@ class AppManager {
     this.debounceTimers = new Map();
   }
 
-  /**
-   * Get cached data or fetch from API
-   */
   async getCachedData(key, fetchFn) {
     const cached = this.cache.get(key);
     if (cached && Date.now() - cached.timestamp < this.config.cacheTimeout) {
@@ -26,25 +20,16 @@ class AppManager {
     return data;
   }
 
-  /**
-   * Clear cache for a key
-   */
   clearCache(key) {
     this.cache.delete(key);
   }
 
-  /**
-   * Debounce function calls
-   */
   debounce(key, fn, delay = this.config.debounceDelay) {
     clearTimeout(this.debounceTimers.get(key));
     const timer = setTimeout(fn, delay);
     this.debounceTimers.set(key, timer);
   }
 
-  /**
-   * Batch DOM queries
-   */
   querySelector(selector) {
     return document.querySelector(selector);
   }
@@ -53,9 +38,6 @@ class AppManager {
     return document.querySelectorAll(selector);
   }
 
-  /**
-   * Add multiple event listeners efficiently
-   */
   addEventListeners(selectors) {
     selectors.forEach(({ selector, event, handler }) => {
       const elements = this.querySelectorAll(selector);
@@ -65,18 +47,12 @@ class AppManager {
     });
   }
 
-  /**
-   * Set multiple data attributes
-   */
   setData(element, data) {
     Object.keys(data).forEach((key) => {
       element.dataset[key] = data[key];
     });
   }
 
-  /**
-   * Get multiple data attributes
-   */
   getData(element, keys) {
     const result = {};
     keys.forEach((key) => {
@@ -85,9 +61,6 @@ class AppManager {
     return result;
   }
 
-  /**
-   * Show/hide elements efficiently
-   */
   show(selector) {
     const el = this.querySelector(selector);
     if (el) el.style.display = "";
@@ -103,9 +76,6 @@ class AppManager {
     if (el) el.style.display = el.style.display === "none" ? "" : "none";
   }
 
-  /**
-   * Format date efficiently
-   */
   formatDate(date) {
     return new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -114,9 +84,6 @@ class AppManager {
     });
   }
 
-  /**
-   * Safe JSON operations
-   */
   parseJSON(str, fallback = null) {
     try {
       return JSON.parse(str);
@@ -134,19 +101,12 @@ class AppManager {
   }
 }
 
-// Create global instance
 const appManager = new AppManager();
 
-/**
- * Utility: Format percentage
- */
 function formatPercentage(value) {
   return `${Math.round(value)}%`;
 }
 
-/**
- * Utility: Format attendance status
- */
 function formatStatus(status) {
   const statusMap = {
     present: "✅ Present",
@@ -157,9 +117,6 @@ function formatStatus(status) {
   return statusMap[status] || status;
 }
 
-/**
- * Utility: Get status color
- */
 function getStatusColor(status) {
   const colorMap = {
     present: "#28a745",
@@ -170,13 +127,9 @@ function getStatusColor(status) {
   return colorMap[status] || "#999";
 }
 
-/**
- * Global error handler
- */
 function handleError(error, context = "") {
   console.error(`[${context}] Error:`, error);
 
-  // Check if it's a 500 error from server
   if (error.response?.status === 500) {
     console.error("Server error - check backend logs");
     return {
@@ -191,10 +144,6 @@ function handleError(error, context = "") {
   };
 }
 
-/**
- * Global success notification
- */
 function showNotification(message, type = "success") {
   console.log(`[${type.toUpperCase()}] ${message}`);
-  // Can be extended to show toast notifications
 }

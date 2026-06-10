@@ -46,7 +46,6 @@ const studentSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// Index for faster queries
 studentSchema.index({ studentId: 1 });
 studentSchema.index({ semester: 1 });
 studentSchema.index({ classes: 1 });

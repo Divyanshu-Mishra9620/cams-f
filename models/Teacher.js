@@ -49,7 +49,6 @@ const teacherSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// Index for faster queries
 teacherSchema.index({ employeeId: 1 });
 teacherSchema.index({ department: 1 });
 teacherSchema.index({ classes: 1 });

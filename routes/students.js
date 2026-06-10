@@ -8,7 +8,6 @@ const router = express.Router();
 
 const isObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
-// Get all students (Teacher only)
 router.get(
   "/",
   verifyToken,
@@ -36,7 +35,6 @@ router.get(
   },
 );
 
-// Get students by class
 router.get("/class/:className", verifyToken, async (req, res) => {
   try {
     const students = await Student.find({
@@ -48,7 +46,6 @@ router.get("/class/:className", verifyToken, async (req, res) => {
   }
 });
 
-// Get students by semester
 router.get("/semester/:semester", verifyToken, async (req, res) => {
   try {
     const students = await Student.find({
@@ -60,7 +57,6 @@ router.get("/semester/:semester", verifyToken, async (req, res) => {
   }
 });
 
-// Get current student's profile
 router.get(
   "/profile/me",
   verifyToken,
@@ -80,7 +76,6 @@ router.get(
   },
 );
 
-// Get student by Mongo ID or college student ID
 router.get("/:id", verifyToken, async (req, res) => {
   try {
     const query = isObjectId(req.params.id)
@@ -101,7 +96,6 @@ router.get("/:id", verifyToken, async (req, res) => {
   }
 });
 
-// Create new student (Admin/Teacher)
 router.post(
   "/",
   verifyToken,
@@ -119,7 +113,6 @@ router.post(
         });
       }
 
-      // Check if student ID already exists
       const existingStudent = await Student.findOne({
         studentId: normalizedStudentId,
       });
@@ -166,7 +159,6 @@ router.post(
   },
 );
 
-// Update student
 router.put(
   "/:id",
   verifyToken,
@@ -195,7 +187,6 @@ router.put(
   },
 );
 
-// Delete student
 router.delete(
   "/:id",
   verifyToken,
@@ -211,7 +202,6 @@ router.delete(
         return res.status(404).json({ error: "Student not found" });
       }
 
-      // Delete associated attendance records
       await Attendance.deleteMany({ studentId: student._id });
 
       res.json({ message: "Student deleted successfully" });

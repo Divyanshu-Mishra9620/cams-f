@@ -38,7 +38,6 @@ const getAvailableUsername = async (email, preferredUsername) => {
   return username;
 };
 
-// Register route
 router.post("/register", async (req, res) => {
   try {
     const {
@@ -54,14 +53,12 @@ router.post("/register", async (req, res) => {
       subjects,
     } = req.body;
 
-    // Validate required fields
     if (!email || !password || !role || !name) {
       return res.status(400).json({
         message: "Missing required fields: email, password, role, name",
       });
     }
 
-    // Check if user already exists
     const existingUser = await User.findOne({
       $or: [{ email: email.toLowerCase() }],
     });
@@ -74,7 +71,6 @@ router.post("/register", async (req, res) => {
     const normalizedEmail = email.toLowerCase().trim();
     const finalUsername = await getAvailableUsername(normalizedEmail, username);
 
-    // Create user
     const user = new User({
       username: finalUsername,
       email: normalizedEmail,
@@ -84,7 +80,6 @@ router.post("/register", async (req, res) => {
 
     await user.save();
 
-    // Create role-specific profile
     let profile = null;
     if (role === "student") {
       profile = new Student({
@@ -109,7 +104,6 @@ router.post("/register", async (req, res) => {
       await profile.save();
     }
 
-    // Generate token
     const token = jwt.sign(
       { userId: user._id, role: user.role, email: user.email },
       process.env.JWT_SECRET,
@@ -132,12 +126,10 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login route
 router.post("/login", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Support both username and email login
     const loginField = email || username;
 
     if (!loginField || !password) {
@@ -147,7 +139,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Find user by email or username
     const user = await User.findOne({
       $or: [{ email: loginField.toLowerCase() }, { username: loginField }],
     });
@@ -159,7 +150,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Check password
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
       return res.status(401).json({
@@ -168,14 +158,12 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Generate token
     const token = jwt.sign(
       { userId: user._id, role: user.role, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "7d" },
     );
 
-    // Get role-specific profile
     let profile = null;
     if (user.role === "student") {
       profile = await Student.findOne({ userId: user._id });
@@ -199,7 +187,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Verify token route
 router.get("/verify", verifyToken, async (req, res) => {
   const user = await User.findById(req.user.userId);
 
@@ -217,7 +204,6 @@ router.get("/verify", verifyToken, async (req, res) => {
   res.json({ valid: true, user: buildUserResponse(user, profile), profile });
 });
 
-// Get current user
 router.get("/me", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);

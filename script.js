@@ -1,5 +1,3 @@
-// ===== COMMON JS FILE =====
-// Data Management Functions
 class AttendanceSystem {
   constructor() {
     this.students = JSON.parse(localStorage.getItem("students")) || [];
@@ -55,7 +53,6 @@ class AttendanceSystem {
             classes: db.classes || [],
           }));
 
-          // Merge local and DB students (DB takes precedence)
           const mergedStudents = [...this.students];
           mappedStudents.forEach((dbStudent) => {
             const index = mergedStudents.findIndex(
@@ -92,8 +89,6 @@ class AttendanceSystem {
           this.attendance = dbAttendance.map((record) => {
             const d = new Date(record.date);
             const localDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-
-            // Handle different formats of studentId
             let studentIdValue = currentUser?.studentId;
             if (record.studentId) {
               if (typeof record.studentId === "object") {
@@ -140,7 +135,6 @@ class AttendanceSystem {
     }
     this.saveData();
 
-    // Sync to DB
     const token =
       localStorage.getItem("authToken") || localStorage.getItem("token");
     return fetch("http://localhost:5000/api/students", {
@@ -175,9 +169,7 @@ class AttendanceSystem {
       student.classes?.includes(className),
     );
   }
-
   getStudentsBySemester(semester) {
-    // Both string and number comparison might be needed depending on form values
     return this.students.filter((student) => student.semester == semester);
   }
 
@@ -226,7 +218,6 @@ class AttendanceSystem {
     }
     this.saveData();
 
-    // Sync to DB
     const token =
       localStorage.getItem("authToken") || localStorage.getItem("token");
     return fetch("http://localhost:5000/api/attendance/mark", {
@@ -273,8 +264,6 @@ class AttendanceSystem {
 
   getStudentAttendance(studentId) {
     if (!studentId) return [];
-
-    // Normalize studentId for comparison
     const normalizedId = String(studentId).trim().toLowerCase();
 
     return this.attendance.filter((record) => {
@@ -344,17 +333,13 @@ class AttendanceSystem {
   }
 }
 
-// Initialize the system
 const attendanceSystem = new AttendanceSystem();
-
-// Login functionality
 document.addEventListener("DOMContentLoaded", function () {
   const currentPage = window.location.pathname.split("/").pop();
 
   if (currentPage === "index.html" || currentPage === "") {
     initializeLoginPage();
   }
-  // Role-specific initialization is now handled in teacher.js and student.js
 });
 
 function initializeLoginPage() {
@@ -393,9 +378,7 @@ function initializeLoginPage() {
       localStorage.setItem("tokenExpiry", expiryTime.toString());
       localStorage.setItem("currentUser", JSON.stringify(data.user));
     };
-
     if (selectedRole === "teacher") {
-      // Try backend login first to get a real token for DB sync
       try {
         const loginRes = await fetch("http://localhost:5000/api/auth/login", {
           method: "POST",
@@ -418,8 +401,6 @@ function initializeLoginPage() {
           "Backend login failed or unreachable. Falling back to offline mode.",
         );
       }
-
-      // Hardcoded teacher credentials fallback
       if (username === "teacher" && password === "teacher") {
         localStorage.setItem(
           "currentUser",
@@ -436,7 +417,6 @@ function initializeLoginPage() {
         showError("Invalid teacher credentials. Use: teacher / teacher");
       }
     } else if (selectedRole === "student") {
-      // Try backend login first for student
       try {
         const loginRes = await fetch("http://localhost:5000/api/auth/login", {
           method: "POST",
@@ -456,9 +436,7 @@ function initializeLoginPage() {
       }
 
       let student = attendanceSystem.getStudentById(username);
-
       if (!student) {
-        // Also try matching by email or name if they didn't use the ID
         student = attendanceSystem.students.find(
           (s) =>
             String(s.email).trim().toLowerCase() ===
@@ -489,7 +467,6 @@ function initializeLoginPage() {
         );
         window.location.href = "student.html";
       } else if (username === "student" && password === "student") {
-        // Fallback to default student if no matching ID
         localStorage.setItem(
           "currentUser",
           JSON.stringify({

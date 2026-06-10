@@ -1,6 +1,3 @@
-// ===== UPDATED STUDENT SCRIPT WITH BACKEND INTEGRATION =====
-
-// Enhanced AttendanceSystem for Students
 class StudentAttendanceSystem {
   constructor() {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -41,8 +38,6 @@ class StudentAttendanceSystem {
     }
   }
 }
-
-// Initialize the system
 const studentSystem = new StudentAttendanceSystem();
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -78,7 +73,6 @@ async function loadAttendanceStats() {
       return;
     }
 
-    // Update UI with stats
     const container = document.getElementById("attendanceStatsContainer");
     if (container) {
       container.innerHTML = `

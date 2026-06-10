@@ -1,6 +1,3 @@
-// ===== AUTHENTICATION UI MODULE =====
-// Handles UI logic for signup and login
-
 class AuthUI {
   constructor() {
     this.selectedRole = null;
@@ -10,18 +7,13 @@ class AuthUI {
     this.checkExistingAuth();
   }
 
-  /**
-   * Initialize all event listeners - Optimized with event delegation
-   */
   initializeEventListeners() {
-    // Single delegated listener for role buttons
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains("role-btn")) {
         this.selectRole(e.target);
       }
     });
 
-    // Form submissions
     const handleFormSubmit = (formId, handler) => {
       const form = document.getElementById(formId);
       if (form) {
@@ -35,7 +27,6 @@ class AuthUI {
     handleFormSubmit("loginForm", this.handleLogin);
     handleFormSubmit("signupForm", this.handleSignup);
 
-    // Navigation buttons
     const setupButton = (btnId, handler) => {
       const btn = document.getElementById(btnId);
       if (btn) btn.addEventListener("click", () => handler.call(this));
@@ -47,14 +38,10 @@ class AuthUI {
     setupButton("backBtn2", this.showRoleSelection);
   }
 
-  /**
-   * Check if user is already authenticated
-   */
   checkExistingAuth() {
     if (authService.isAuthenticated()) {
       const user = authService.getCurrentUser();
       if (user && user.role) {
-        // Redirect to appropriate dashboard
         setTimeout(() => {
           if (user.role === "teacher") {
             window.location.href = "teacher.html";
@@ -66,11 +53,7 @@ class AuthUI {
     }
   }
 
-  /**
-   * Select a role (teacher or student)
-   */
   selectRole(btn) {
-    // Update button states
     document.querySelectorAll(".role-btn").forEach((b) => {
       b.classList.remove("active");
     });
@@ -80,9 +63,6 @@ class AuthUI {
     this.showLoginForm();
   }
 
-  /**
-   * Show login form
-   */
   showLoginForm() {
     if (!this.selectedRole) {
       this.showMessage("Please select a role first", "error");
@@ -94,13 +74,9 @@ class AuthUI {
     document.getElementById("signupFormContainer").style.display = "none";
     document.getElementById("demoInfo").style.display = "block";
 
-    // Clear form
     document.getElementById("loginForm").reset();
   }
 
-  /**
-   * Show signup form
-   */
   showSignupForm() {
     if (!this.selectedRole) {
       this.showMessage("Please select a role first", "error");
@@ -112,7 +88,6 @@ class AuthUI {
     document.getElementById("signupFormContainer").style.display = "block";
     document.getElementById("demoInfo").style.display = "none";
 
-    // Show role-specific fields
     if (this.selectedRole === "teacher") {
       document.getElementById("teacherFields").style.display = "block";
       document.getElementById("studentFields").style.display = "none";
@@ -121,29 +96,21 @@ class AuthUI {
       document.getElementById("studentFields").style.display = "block";
     }
 
-    // Clear form
     document.getElementById("signupForm").reset();
   }
 
-  /**
-   * Show role selection
-   */
   showRoleSelection() {
     document.getElementById("roleSelection").style.display = "block";
     document.getElementById("loginFormContainer").style.display = "none";
     document.getElementById("signupFormContainer").style.display = "none";
     document.getElementById("demoInfo").style.display = "block";
 
-    // Clear selection
     document.querySelectorAll(".role-btn").forEach((btn) => {
       btn.classList.remove("active");
     });
     this.selectedRole = null;
   }
 
-  /**
-   * Handle login form submission - Optimized with better validation
-   */
   async handleLogin(e) {
     e.preventDefault();
 
@@ -155,19 +122,16 @@ class AuthUI {
     const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value.trim();
 
-    // Validate input
     if (!email || !password) {
       this.showMessage("Please fill in all fields", "error");
       return;
     }
 
-    // Validate email format
     if (!email.includes("@")) {
       this.showMessage("Please enter a valid email address", "error");
       return;
     }
 
-    // Show loading state
     this.isLoadingLogin = true;
     const loginBtn = document.getElementById("loginBtn");
     const originalText = loginBtn.textContent;
@@ -175,7 +139,6 @@ class AuthUI {
     loginBtn.textContent = "Logging in...";
 
     try {
-      // Try backend authentication
       const result = await authService.login(email, password);
 
       if (result.success) {
@@ -200,9 +163,6 @@ class AuthUI {
     }
   }
 
-  /**
-   * Handle signup form submission - Optimized with better validation
-   */
   async handleSignup(e) {
     e.preventDefault();
 
@@ -218,7 +178,6 @@ class AuthUI {
       .getElementById("signupConfirmPassword")
       .value.trim();
 
-    // Validate input
     if (!name || !email || !password || !confirmPassword) {
       this.showMessage("Please fill in all fields", "error");
       return;
@@ -229,13 +188,11 @@ class AuthUI {
       return;
     }
 
-    // Validate email format
     if (!this.isValidEmail(email)) {
       this.showMessage("Please enter a valid email address", "error");
       return;
     }
 
-    // Validate password
     if (password.length < 6) {
       this.showMessage("Password must be at least 6 characters", "error");
       return;
@@ -246,7 +203,6 @@ class AuthUI {
       return;
     }
 
-    // Build user data
     const userData = {
       name,
       email,
@@ -254,7 +210,6 @@ class AuthUI {
       role: this.selectedRole,
     };
 
-    // Add role-specific fields
     if (this.selectedRole === "teacher") {
       userData.department =
         document.getElementById("signupDepartment").value || "General";
@@ -273,7 +228,6 @@ class AuthUI {
         1;
     }
 
-    // Show loading state
     this.isLoadingSignup = true;
     const signupBtn = document.getElementById("signupBtn");
     const originalText = signupBtn.textContent;
@@ -307,9 +261,6 @@ class AuthUI {
     }
   }
 
-  /**
-   * Check hardcoded demo credentials
-   */
   checkHardcodedCredentials(email, password) {
     if (this.selectedRole === "teacher") {
       return email === "teacher" && password === "teacher";
@@ -319,9 +270,6 @@ class AuthUI {
     return false;
   }
 
-  /**
-   * Create mock user object for hardcoded credentials
-   */
   createMockUser(email) {
     return {
       id: `${this.selectedRole}_${Date.now()}`,
@@ -339,22 +287,15 @@ class AuthUI {
     };
   }
 
-  /**
-   * Validate email format
-   */
   isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  /**
-   * Show message to user - Optimized with better type handling
-   */
   showMessage(message, type = "info") {
     const container = document.getElementById("messageContainer");
     if (!container) return;
 
-    // Map message type to CSS class
     const messageClassMap = {
       error: "error-message",
       success: "success-message",
@@ -380,8 +321,6 @@ class AuthUI {
   }
 }
 
-// Initialize auth UI when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-  // Global auth UI instance for form handling
   globalThis.authUI = new AuthUI();
 });

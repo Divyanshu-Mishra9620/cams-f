@@ -1,6 +1,3 @@
-// ===== UPDATED TEACHER SCRIPT WITH BACKEND INTEGRATION =====
-
-// Enhanced AttendanceSystem with Backend API
 class AttendanceSystem {
   constructor() {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -12,10 +9,9 @@ class AttendanceSystem {
   async loadFromBackend() {
     try {
       this.students = await apiClient.getAllStudents();
-      console.log("✓ Students loaded from backend");
+      console.log("Students loaded from backend");
     } catch (error) {
       console.error("Error loading students from backend:", error);
-      // Fallback to localStorage if backend is unavailable
       this.students = JSON.parse(localStorage.getItem("students")) || [];
     }
   }
@@ -31,11 +27,10 @@ class AttendanceSystem {
         classes: student.classes || [],
       });
       this.students.push(response);
-      console.log("✓ Student added to backend");
+      console.log("Student added to backend");
       return response;
     } catch (error) {
       console.error("Error adding student to backend:", error);
-      // Fallback to localStorage
       this.students.push(student);
       this.saveDataLocally();
     }
@@ -61,10 +56,9 @@ class AttendanceSystem {
         date: date,
         status: status,
       });
-      console.log("✓ Attendance marked in backend");
+      console.log("Attendance marked in backend");
     } catch (error) {
       console.error("Error marking attendance:", error);
-      // Fallback to localStorage
       const attendanceRecord = {
         date,
         class: className,
@@ -81,7 +75,6 @@ class AttendanceSystem {
       return await apiClient.getClassAttendanceStats(className);
     } catch (error) {
       console.error("Error fetching class stats:", error);
-      // Fallback calculation
       const students = await this.getStudentsByClass(className);
       return {
         totalStudents: students.length,
@@ -97,7 +90,6 @@ class AttendanceSystem {
   }
 }
 
-// Initialize the system
 const attendanceSystem = new AttendanceSystem();
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -120,7 +112,6 @@ function initializeTeacherPage() {
 }
 
 function setupTeacherDashboard() {
-  // Add student form
   const addStudentForm = document.getElementById("addStudentForm");
   if (addStudentForm) {
     addStudentForm.addEventListener("submit", async (e) => {
@@ -145,7 +136,6 @@ function setupTeacherDashboard() {
     });
   }
 
-  // Attendance marking form
   const markAttendanceForm = document.getElementById("markAttendanceForm");
   if (markAttendanceForm) {
     markAttendanceForm.addEventListener("submit", async (e) => {
@@ -171,7 +161,6 @@ function setupTeacherDashboard() {
     });
   }
 
-  // Load initial data
   displayStudents();
 }
 

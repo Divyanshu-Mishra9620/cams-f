@@ -40,7 +40,6 @@ const attendanceSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// Compound index for faster queries
 attendanceSchema.index(
   { studentId: 1, className: 1, subject: 1, date: 1 },
   { unique: true },
