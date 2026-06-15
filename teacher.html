@@ -3,20 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teacher Dashboard - Attendance Management System</title>
+    <title>Teacher Dashboard — College Attendance Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <div class="dashboard-container">
-      <div class="dashboard-header">
-        <h1>Teacher Dashboard</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+  <body class="app-body">
+    <header class="appbar">
+      <div class="appbar-inner">
+        <div class="brand">
+          <span class="brand-logo" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
+          </span>
+          <span class="brand-name"
+            >College Attendance<small>Management System</small></span
+          >
+        </div>
+        <div class="appbar-right">
+          <span class="role-pill">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M2 3h20v14H2z" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+            Teacher
+          </span>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="page-head">
+        <div class="eyebrow">Dashboard</div>
+        <h1>Teacher workspace</h1>
+        <p>
+          Enroll students, mark daily attendance, and review class performance.
+        </p>
       </div>
 
       <div class="dashboard-content">
         <!-- Add Student Section -->
         <div class="dashboard-card">
-          <h3>Add New Student</h3>
+          <h3>
+            <span class="card-ic" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="8" r="4" />
+                <path d="M2 21a7 7 0 0 1 14 0" />
+                <path d="M19 8v6M22 11h-6" />
+              </svg>
+            </span>
+            Add New Student
+          </h3>
           <form id="addStudentForm">
             <div class="form-row">
               <input
@@ -39,9 +105,6 @@
                 placeholder="Email"
                 required
               />
-              <!--<label for="studentClass"
-                >Student will be enrolled in all subjects</label
-              >-->
               <select id="studentClass" required style="display: none">
                 <option value="all" selected>All Subjects</option>
               </select>
@@ -76,7 +139,24 @@
 
         <!-- Mark Attendance Section -->
         <div class="dashboard-card">
-          <h3>Mark Attendance</h3>
+          <h3>
+            <span class="card-ic" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 11l3 3L22 4" />
+                <path
+                  d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+                />
+              </svg>
+            </span>
+            Mark Attendance
+          </h3>
           <form id="attendanceForm">
             <div class="form-row">
               <select id="attendanceSemester" required>
@@ -98,7 +178,7 @@
 
           <div id="attendanceList" class="student-list" style="display: none">
             <h4>
-              Mark Attendance for <span id="selectedClass"></span> -
+              Mark Attendance for <span id="selectedClass"></span> —
               <span id="selectedDate"></span>
             </h4>
             <div id="studentsForAttendance"></div>
@@ -114,7 +194,24 @@
 
         <!-- Class Statistics -->
         <div class="dashboard-card">
-          <h3>Today's Class Statistics</h3>
+          <h3>
+            <span class="card-ic" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 3v18h18" />
+                <rect x="7" y="11" width="3" height="6" />
+                <rect x="13" y="7" width="3" height="10" />
+                <rect x="19" y="13" width="0" height="4" />
+              </svg>
+            </span>
+            Today's Class Statistics
+          </h3>
           <div class="form-row">
             <select id="statsSemester">
               <option value="">Select Semester</option>
@@ -126,14 +223,27 @@
               <option value="6">Semester 6</option>
             </select>
           </div>
-          <div id="classStats">
-            <!-- Per class stats will be populated here -->
-          </div>
+          <div id="classStats"></div>
         </div>
 
         <!-- Search Students -->
         <div class="dashboard-card">
-          <h3>Search Students</h3>
+          <h3>
+            <span class="card-ic" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3" />
+              </svg>
+            </span>
+            Search Students
+          </h3>
           <form id="searchForm">
             <div class="form-row">
               <input
@@ -165,8 +275,25 @@
         </div>
 
         <!-- Student List -->
-        <div class="dashboard-card">
-          <h3>All Students</h3>
+        <div class="dashboard-card card-wide">
+          <h3>
+            <span class="card-ic" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </span>
+            All Students
+          </h3>
           <div class="form-row">
             <select id="filterSemester">
               <option value="">All Semesters</option>
@@ -181,7 +308,7 @@
           <div id="allStudentsList" class="student-list"></div>
         </div>
       </div>
-    </div>
+    </main>
 
     <script src="auth.js"></script>
     <script>

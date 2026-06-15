@@ -62,23 +62,35 @@ function drawAttendanceChart(percentage) {
   const ctx = canvas.getContext("2d");
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
-  const radius = 40;
+  const radius = 42;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Track (remaining portion)
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-  ctx.fillStyle = "#dc3545";
+  ctx.fillStyle = "#E6E9F3";
   ctx.fill();
+
+  // Filled portion — semantic colour based on the percentage band
+  const arcColor =
+    percentage >= 75 ? "#15A34A" : percentage >= 50 ? "#C2740A" : "#DC2626";
   const startAngle = -Math.PI / 2;
   const endAngle = startAngle + (percentage / 100) * 2 * Math.PI;
-
   ctx.beginPath();
   ctx.moveTo(centerX, centerY);
   ctx.arc(centerX, centerY, radius, startAngle, endAngle);
   ctx.closePath();
-  ctx.fillStyle = "#28a745";
+  ctx.fillStyle = arcColor;
   ctx.fill();
-  ctx.fillStyle = "#fff";
-  ctx.font = "bold 16px Arial";
+
+  // Inner disc -> donut, with readable centred label
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius * 0.62, 0, 2 * Math.PI);
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fill();
+
+  ctx.fillStyle = "#181B34";
+  ctx.font = "700 16px 'Plus Jakarta Sans', Arial, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(percentage + "%", centerX, centerY);
